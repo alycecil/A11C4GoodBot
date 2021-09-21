@@ -39,7 +39,7 @@ YTDL-Core version   :: v${(await this.client.util.getPackageJSON("ytdl-core")).v
 Opus Encoder        :: ${opusEncoder.pkgMetadata.name} v${opusEncoder.pkgMetadata.version}
 Bot version         :: v${(await this.client.util.getPackageJSON()).version}
 
-Source code         :: https://github.com/zhycorp/disc-11
+Source code         :: https://github.com/alycecil/A11C4GoodBot
 \`\`\`
         `).setAuthor(`${this.client.user?.username as string} - Bot Information`)
         ).catch(e => this.client.logger.error("ABOUT_CMD_ERR:", e));
