@@ -20,4 +20,29 @@ export class SongManager extends Collection<Snowflake, ISong> {
         });
         return this;
     }
+    
+    public shuffle(): this {
+        const array = [...this.entries()];
+        let currentIndex = array.length;
+        let temporaryValue;
+        let randomIndex;
+        
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        // Perform clean-up
+        this.clear();
+
+        // Set the new entries
+        for (const [k, v] of array) {
+            this.set(k, v);
+        }
+        
+        return this;
+    }
 }
