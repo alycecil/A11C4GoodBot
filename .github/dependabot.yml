@@ -9,7 +9,7 @@ updates:
   open-pull-requests-limit: 99
   target-branch: main
   reviewers:
-  - mzrtamp
+  - alycecil
   labels:
   - dependencies
   commit-message:
@@ -24,7 +24,7 @@ updates:
   open-pull-requests-limit: 99
   target-branch: main
   reviewers:
-  - mzrtamp
+  - alycecil
   labels:
   - gh-actions
   - dependencies
@@ -40,7 +40,7 @@ updates:
   open-pull-requests-limit: 99
   target-branch: main
   reviewers:
-  - mzrtamp
+  - alycecil
   labels:
   - docker
   - dependencies
