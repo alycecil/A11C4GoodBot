@@ -14,15 +14,29 @@ export class ShuffleCommand extends BaseCommand {
     @isUserInTheVoiceChannel()
     @isMusicQueueExists()
     @isSameVoiceChannel()
-    public execute(message: Message): any {
+    public execute(message: Message, args: string[]): any {
+        if (args[0]) {
+            message.channel.send(
+                createEmbed("info", `**|** What do I do with ${args.join("... and what do I do with ")} **`)
+            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+            return;
+        }
+        if (message.guild!.queue!.gaming) {
+            message.channel.send(
+                createEmbed("info", `**|** In game mode, unable to shuffle. **`)
+            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+        } else {
+            this.shuffle(message);
+            message.channel.send(
+                createEmbed("info", `**|** Shuffled the Queue. **`)
+            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+        }
+    }
+
+    public shuffle(message: Message): void {
         message.guild!.queue!.playing = true;
         message.guild?.queue?.connection?.dispatcher.once("speaking", () => message.guild?.queue?.connection?.dispatcher.end());
-        message.guild!.queue?.connection?.dispatcher.resume();
-
         message.guild?.queue?.songs.shuffle();
-
-        message.channel.send(
-            createEmbed("info", `:blush~1: **|** Shuffled the Queue. **`)
-        ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+        message.guild!.queue?.connection?.dispatcher.resume();
     }
 }
