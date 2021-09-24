@@ -24,6 +24,24 @@ Notes:
 1. You only need to configure `.env` file when you're using the [Docker image](https://github.com/zhycorp/disc-11#Docker)
 2. If you're using **Deploy to Heroku** button, you don't need to do this.
 
+## Raspberry Pi 4 Setup
+To configure the pi to use node 12+
+
+```shell script
+curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+```
+
+Ask to install the new version
+```shell script
+sudo apt install nodejs
+```
+
+Verify the install
+```shell script
+node --version
+```
+This should reply with a version number of at least 12.9.0
+
 ## Installation
 
 Without optional packages:
