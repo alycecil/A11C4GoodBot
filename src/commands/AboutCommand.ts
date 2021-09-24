@@ -17,30 +17,30 @@ export class AboutCommand extends BaseCommand {
             const happyFace = HappyFace(this.client);
             const opusEncoder = await this.client.util.getOpusEncoder();
             message.channel.send(
-                createEmbed("info", `
+                createEmbed("info", `${happyFace} Hi Mom! ${happyFace}
 \`\`\`asciidoc
-Cached users count  :: ${happyFace} ${await this.client.util.getUsersCount()} ${happyFace}
-Channels count      :: ${happyFace} ${await this.client.util.getChannelsCount()} ${happyFace}
-Guilds count        :: ${happyFace} ${await this.client.util.getGuildsCount()} ${happyFace}
-Shards count        :: ${happyFace} ${this.client.shard ? `${this.client.shard.count}` : "N/A"} ${happyFace}
-Shard ID            :: ${happyFace} ${this.client.shard ? `${this.client.shard.ids[0]}` : "N/A"} ${happyFace}
-Playing Music on    :: ${happyFace} ${await this.client.util.getTotalPlaying()} ${happyFace} guilds
-Data Strategy       :: ${happyFace} ${await this.client.config.YouTubeDataRetrievingStrategy === "api" ? "REST API" : "HTML SCRAPING"} ${happyFace}
+Cached users count  ::  ${await this.client.util.getUsersCount()} 
+Channels count      ::  ${await this.client.util.getChannelsCount()} 
+Guilds count        ::  ${await this.client.util.getGuildsCount()} 
+Shards count        ::  ${this.client.shard ? `${this.client.shard.count}` : "N/A"} 
+Shard ID            ::  ${this.client.shard ? `${this.client.shard.ids[0]}` : "N/A"} 
+Playing Music on    ::  ${await this.client.util.getTotalPlaying()}  guilds
+Data Strategy       ::  ${await this.client.config.YouTubeDataRetrievingStrategy === "api" ? "REST API" : "HTML SCRAPING"} 
 
-Platform - Arch     :: ${happyFace} ${process.platform} - ${process.arch} ${happyFace}
-OS Uptime           :: ${happyFace} ${this.client.util.formatMS(osUptime() * 1000)} ${happyFace}
-Memory (RSS)        :: ${happyFace} ${this.client.util.bytesToSize(process.memoryUsage().rss)} ${happyFace} 
-Memory (Heap Total) :: ${happyFace} ${this.client.util.bytesToSize(process.memoryUsage().heapTotal)} ${happyFace}
-Memory (Heap Used)  :: ${happyFace} ${this.client.util.bytesToSize(process.memoryUsage().heapUsed)} ${happyFace}
-Process Uptime      :: ${happyFace} ${this.client.util.formatMS(process.uptime() * 1000)} ${happyFace}
-Bot Uptime          :: ${happyFace} ${this.client.util.formatMS(this.client.uptime!)} ${happyFace}
+Platform - Arch     ::  ${process.platform} - ${process.arch} 
+OS Uptime           ::  ${this.client.util.formatMS(osUptime() * 1000)} 
+Memory (RSS)        ::  ${this.client.util.bytesToSize(process.memoryUsage().rss)}  
+Memory (Heap Total) ::  ${this.client.util.bytesToSize(process.memoryUsage().heapTotal)} 
+Memory (Heap Used)  ::  ${this.client.util.bytesToSize(process.memoryUsage().heapUsed)} 
+Process Uptime      ::  ${this.client.util.formatMS(process.uptime() * 1000)} 
+Bot Uptime          ::  ${this.client.util.formatMS(this.client.uptime!)} 
 
-Node.js version     :: ${happyFace} ${process.version} ${happyFace}
-Discord.js version  :: ${happyFace} v${version} ${happyFace}
-FFmpeg version      :: ${happyFace} v${(await this.client.util.getPackageJSON("ffmpeg-static"))["ffmpeg-static"]["binary-release-name"]} ${happyFace}
-YTDL-Core version   :: ${happyFace} v${(await this.client.util.getPackageJSON("ytdl-core")).version} ${happyFace}
-Opus Encoder        :: ${happyFace} ${opusEncoder.pkgMetadata.name} ${happyFace} v${opusEncoder.pkgMetadata.version} ${happyFace} ${happyFace}
-Bot version         :: ${happyFace} v${(await this.client.util.getPackageJSON()).version} ${happyFace}
+Node.js version     ::  ${process.version} 
+Discord.js version  ::  v${version} 
+FFmpeg version      ::  v${(await this.client.util.getPackageJSON("ffmpeg-static"))["ffmpeg-static"]["binary-release-name"]} 
+YTDL-Core version   ::  v${(await this.client.util.getPackageJSON("ytdl-core")).version} 
+Opus Encoder        ::  ${opusEncoder.pkgMetadata.name}  v${opusEncoder.pkgMetadata.version}  
+Bot version         ::  v${(await this.client.util.getPackageJSON()).version} 
 
 Source code         :: https://github.com/alycecil/A11C4GoodBot
 \`\`\`
