@@ -18,18 +18,20 @@ export class ShuffleCommand extends BaseCommand {
         if (args[0]) {
             message.channel.send(
                 createEmbed("info", `**|** What do I do with ${args.join("... and what do I do with ")} **`)
-            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+            ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
             return;
         }
         if (message.guild!.queue!.gaming) {
             message.channel.send(
                 createEmbed("info", `**|** In game mode, unable to shuffle. **`)
-            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+            ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
         } else {
-            this.shuffle(message);
-            message.channel.send(
-                createEmbed("info", `**|** Shuffled the Queue. **`)
-            ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+            message.react("🔀").then(() => {
+                this.shuffle(message);
+                message.channel.send(
+                    createEmbed("info", `**|** 🔀 Shuffled the Queue. 🔀 **`)
+                ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
+            }).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
         }
     }
 

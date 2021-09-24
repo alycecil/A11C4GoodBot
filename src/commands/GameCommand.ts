@@ -5,6 +5,7 @@ import { createEmbed } from "../utils/createEmbed";
 import { Message } from "discord.js";
 import { loopMode } from "../structures/ServerQueue";
 import { levenshtein } from "edit-distance";
+import { HappyFace, SadFace } from "../utils/Emojis";
 
 @DefineCommand({
     aliases: ["games"],
@@ -28,8 +29,8 @@ export class GameCommand extends ShuffleCommand {
                     return;
                 }
 
-                const insert = function (node: any): number { return 1; };
-                const remove = function (node: any): number { return 1; };
+                const insert = function (): number { return 1; };
+                const remove = function (): number { return 1; };
                 const update = function (stringA: string, stringB: string): number { return stringA === stringB ? 0 : 1; };
 
 
@@ -41,19 +42,26 @@ export class GameCommand extends ShuffleCommand {
 
                 const scoreRequired = goals.length / 6;
                 if (lev.distance < scoreRequired) {
-                    message.channel.send(
-                        createEmbed("info", `**|** You got a Levenshtein score of ${lev.distance}, it was less than the required ${scoreRequired}... you win! **`)
-                    ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+                    const happyFace = HappyFace(this.client);
+                    message.react(happyFace).then(() => {
+                        message.channel.send(
+                            createEmbed("info", `**|** ${happyFace} You got a Levenshtein score of ${lev.distance}, it was less than the required ${scoreRequired}... you win! (pairs ${lev.pairs()} with alignment ${lev.alignment()}) **`)
+                        ).catch(e => this.client.logger.error("GAME_CMD_ERR:", e));
+                    }).catch(e => this.client.logger.error("GAME_CMD_ERR:", e));
+
                     // TODO next song
                 } else {
-                    message.channel.send(
-                        createEmbed("info", `**|** You got a Levenshtein score of ${lev.distance}, it was MORE than the required ${scoreRequired}... you did not win! **`)
-                    ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+                    const sadFace = SadFace(this.client);
+                    message.react(sadFace).then(() => {
+                        message.channel.send(
+                            createEmbed("info", `**|** ${sadFace} You got a Levenshtein score of ${lev.distance}, it was MORE than the required ${scoreRequired}... you did not win! (pairs ${lev.pairs()} with alignment ${lev.alignment()}) ${sadFace} **`)
+                        ).catch(e => this.client.logger.error("GAME_CMD_ERR:", e));
+                    }).catch(e => this.client.logger.error("GAME_CMD_ERR:", e));
                 }
             } else {
                 message.channel.send(
                     createEmbed("info", `**|** In game mode already, Join in by typing your guess for author or song. **`)
-                ).catch(e => this.client.logger.error("SKIP_CMD_ERR:", e));
+                ).catch(e => this.client.logger.error("GAME_CMD_ERR:", e));
             }
         } else {
             // TODO ensure there is a queue of at least N
