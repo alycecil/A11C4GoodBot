@@ -15,24 +15,12 @@ export class ShuffleCommand extends BaseCommand {
     @isMusicQueueExists()
     @isSameVoiceChannel()
     public execute(message: Message, args: string[]): any {
-        if (args[0]) {
+        message.react("🔀").then(() => {
+            this.shuffle(message);
             message.channel.send(
-                createEmbed("info", `**|** What do I do with ${args.join("... and what do I do with ")} **`)
+                createEmbed("info", `**|** 🔀 Shuffled the Queue. 🔀 **`)
             ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
-            return;
-        }
-        if (message.guild!.queue!.gaming) {
-            message.channel.send(
-                createEmbed("info", `**|** In game mode, unable to shuffle. **`)
-            ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
-        } else {
-            message.react("🔀").then(() => {
-                this.shuffle(message);
-                message.channel.send(
-                    createEmbed("info", `**|** 🔀 Shuffled the Queue. 🔀 **`)
-                ).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
-            }).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
-        }
+        }).catch(e => this.client.logger.error("SHUFFLE_CMD_ERR:", e));
     }
 
     public shuffle(message: Message): void {
