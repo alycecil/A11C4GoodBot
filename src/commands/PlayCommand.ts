@@ -232,9 +232,15 @@ export class PlayCommand extends BaseCommand {
             .on("start", () => {
                 serverQueue.playing = true;
                 this.client.logger.info(`${this.client.shard ? `[Shard #${this.client.shard.ids[0]}]` : ""} Track: "${song.title}" on ${guild.name} started`);
-                serverQueue.textChannel?.send(createEmbed("info", `▶ **|** Start playing: **[${song.title}](${song.url})**`).setThumbnail(song.thumbnail))
-                    .then(m => serverQueue.oldMusicMessage = m.id)
-                    .catch(e => this.client.logger.error("PLAY_ERR:", e));
+                if (guild.queue?.gaming) {
+                    serverQueue.textChannel?.send(createEmbed("info", `▶ **|** Start Guessing **!**`).setThumbnail(song.thumbnail))
+                        .then(m => serverQueue.oldMusicMessage = m.id)
+                        .catch(e => this.client.logger.error("PLAY_ERR:", e));
+                } else {
+                    serverQueue.textChannel?.send(createEmbed("info", `▶ **|** Start playing: **[${song.title}](${song.url})**`).setThumbnail(song.thumbnail))
+                        .then(m => serverQueue.oldMusicMessage = m.id)
+                        .catch(e => this.client.logger.error("PLAY_ERR:", e));
+                }
             })
             .on("finish", () => {
                 this.client.logger.info(`${this.client.shard ? `[Shard #${this.client.shard.ids[0]}]` : ""} Track: "${song.title}" on ${guild.name} ended`);

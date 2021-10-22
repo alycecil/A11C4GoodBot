@@ -24,6 +24,7 @@ export class ServerQueue {
     public loopMode = loopMode.disable;
     public timeout: NodeJS.Timeout | null = null;
     public playing = false;
+    public gaming = false;
     private _lastMusicMessageID: Snowflake | null = null;
     private _lastVoiceStateUpdateMessageID: Snowflake | null = null;
     public constructor(public textChannel: TextChannel | null = null, public voiceChannel: VoiceChannel | null = null) {

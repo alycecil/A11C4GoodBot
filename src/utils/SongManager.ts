@@ -20,13 +20,38 @@ export class SongManager extends Collection<Snowflake, ISong> {
         });
         return this;
     }
-    
+
+    public reverse(): this {
+        const array = [...this.entries()];
+        let currentIndex = array.length;
+        let temporaryValue;
+        let lowIndex = 0;
+
+        while (currentIndex > lowIndex) {
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[lowIndex];
+            array[lowIndex] = temporaryValue;
+            lowIndex += 1;
+        }
+
+        // Perform clean-up
+        this.clear();
+
+        // Set the new entries
+        for (const [k, v] of array) {
+            this.set(k, v);
+        }
+
+        return this;
+    }
+
     public shuffle(): this {
         const array = [...this.entries()];
         let currentIndex = array.length;
         let temporaryValue;
         let randomIndex;
-        
+
         while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
@@ -42,7 +67,7 @@ export class SongManager extends Collection<Snowflake, ISong> {
         for (const [k, v] of array) {
             this.set(k, v);
         }
-        
+
         return this;
     }
 }
